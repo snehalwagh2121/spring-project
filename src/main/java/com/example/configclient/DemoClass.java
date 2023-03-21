@@ -1,5 +1,7 @@
 package com.example.configclient;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -18,46 +20,47 @@ import javax.annotation.PostConstruct;
 @RefreshScope
 public class DemoClass {
 
+    Logger log = LoggerFactory.getLogger(DemoClass.class);
     @Value("${excel.file.location}")
     String filePath;
-    
+
     @Value("${message}")
     String message;
 
     @GetMapping("/")
-    public String getFilePath(){
-        System.out.println("file : "+filePath);
-        System.out.println("message: "+message);
+    public String getFilePath() {
+        log.info("file : " + filePath);
+        log.info("message: " + message);
         return message;
     }
 
     @PostConstruct
-    public void postConstruct(){
-        System.out.println("This is postconstruct method ");
+    public void postConstruct() {
+        log.info("This is postconstruct method ");
     }
 
     @EventListener(ApplicationReadyEvent.class)
     public void doSomethingAfterStartup() {
-        System.out.println("This is application ready event listener");
+        log.info("This is application ready event listener");
     }
 
     @EventListener
     public void allApplicationEventListener(ApplicationEvent event) {
-        System.out.println("event: "+event.getClass());
+        log.info("event: " + event.getClass());
     }
 
     @Bean
-    public CommandLineRunner runner(){
+    public CommandLineRunner runner() {
         return args -> {
-            System.out.println("this is the run method of command line runner and we've created a bean of it");
+            log.info("this is the run method of command line runner and we've created a bean of it");
         };
     }
 
     @Bean
-    public ApplicationRunner applicationRunner(ApplicationArguments args0){
+    public ApplicationRunner applicationRunner(ApplicationArguments args0) {
         return args -> {
-            System.out.println("application runner bean created");
-            System.out.println("args0: "+args0.getSourceArgs());
+            log.info("application runner bean created");
+            log.info("args0: " + args0.getSourceArgs());
         };
     }
 }
