@@ -35,3 +35,53 @@ public class MDCFilter extends OncePerRequestFilter {
     }
 }
 ```
+
+#EXCEPTION HANDLING IN SPRING BOOT
+
+Some annotations that spring boot provides:
+1. @ResponseStatus
+2. @ExceptionHandler
+3. @ControllerAdvice
+
+the property **server.error.include-message=always** sends the message of exception in the response.
+
+![exception](exception-msg.png)
+
+properties of logger:
+[click here](https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#appendix.application-properties.server)
+
+
+@ResponseStatus specifies the status of Http request to be sent as response.
+
+@ExceptionHAndler as the name suggests, it handles the excpetion. Whenever we annotate a method with ExceptionHandler and provide the name of the exception to be handled, the particular method is called just before sending the response and will be executed.
+
+eg:
+```java
+@ExceptionHandler(Sample404ExceptionClass.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<String> handleSample404Exception(Sample404ExceptionClass e) {
+        log.info("handling Sample404 Exception using Exception handler");
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(e.getMessage());
+    }
+```
+
+Here whenever a Sample404Exception is supposed to be thrown, the handleSample404Exception method is called.
+
+But for @ExceptionHandler to be executed, we need @ControllerAdvice or @RestControllerAdvice on top of the class.
+
+```java
+@ControllerAdvice
+public class AllExceptionHandler {
+
+    @ExceptionHandler(Sample404ExceptionClass.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<String> handleSample404Exception(Sample404ExceptionClass e) {
+        log.info("handling Sample404 Exception using Exception handler");
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(e.getMessage());
+    }
+}
+```
