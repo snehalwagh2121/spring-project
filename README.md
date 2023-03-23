@@ -85,3 +85,51 @@ public class AllExceptionHandler {
     }
 }
 ```
+
+#Generate SSL cerificate
+
+keytool -genkey -alias newhttps-alias -storetype JKS -keyalg RSA -keysize 2048 -validity 365 -keystore newssl-certificate.jks
+
+![img.png](img.png)
+getting exception:
+```aidl
+Caused by: org.apache.catalina.LifecycleException: Protocol handler start failed
+	at org.apache.catalina.connector.Connector.startInternal(Connector.java:1076)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:183)
+	at org.apache.catalina.core.StandardService.addConnector(StandardService.java:234)
+	... 18 common frames omitted
+Caused by: java.lang.IllegalArgumentException: Keystore was tampered with, or password was incorrect
+	at org.apache.tomcat.util.net.AbstractJsseEndpoint.createSSLContext(AbstractJsseEndpoint.java:107)
+	at org.apache.tomcat.util.net.AbstractJsseEndpoint.initialiseSsl(AbstractJsseEndpoint.java:71)
+	at org.apache.tomcat.util.net.NioEndpoint.bind(NioEndpoint.java:235)
+	at org.apache.tomcat.util.net.AbstractEndpoint.bindWithCleanup(AbstractEndpoint.java:1227)
+	at org.apache.tomcat.util.net.AbstractEndpoint.start(AbstractEndpoint.java:1313)
+	at org.apache.coyote.AbstractProtocol.start(AbstractProtocol.java:615)
+	at org.apache.catalina.connector.Connector.startInternal(Connector.java:1073)
+	... 20 common frames omitted
+Caused by: java.io.IOException: Keystore was tampered with, or password was incorrect
+	at java.base/sun.security.provider.JavaKeyStore.engineLoad(JavaKeyStore.java:813)
+	at java.base/sun.security.util.KeyStoreDelegator.engineLoad(KeyStoreDelegator.java:221)
+	at java.base/java.security.KeyStore.load(KeyStore.java:1473)
+	at org.apache.tomcat.util.security.KeyStoreUtil.load(KeyStoreUtil.java:69)
+	at org.apache.tomcat.util.net.SSLUtilBase.getStore(SSLUtilBase.java:217)
+	at org.apache.tomcat.util.net.SSLHostConfigCertificate.getCertificateKeystore(SSLHostConfigCertificate.java:207)
+	at org.apache.tomcat.util.net.SSLUtilBase.getKeyManagers(SSLUtilBase.java:283)
+	at org.apache.tomcat.util.net.SSLUtilBase.createSSLContext(SSLUtilBase.java:247)
+	at org.apache.tomcat.util.net.AbstractJsseEndpoint.createSSLContext(AbstractJsseEndpoint.java:105)
+	... 26 common frames omitted
+Caused by: java.security.UnrecoverableKeyException: Password verification failed
+	at java.base/sun.security.provider.JavaKeyStore.engineLoad(JavaKeyStore.java:811)
+	... 34 common frames omitted
+```
+
+Solution:
+The property was not proper
+instead of server.ssl.key-password we need to use server.ssl.key-store-password
+```mermaid
+server.ssl.key-alias=newhttps-alias
+server.ssl.key-store=newssl-certificate.jks
+server.ssl.key-store-type=jks
+server.ssl.key-store-password=mypass@1
+```
+
