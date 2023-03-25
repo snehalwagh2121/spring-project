@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/exception")
-public class ExceptionDemo {
-    Logger logger= LoggerFactory.getLogger(ExceptionDemo.class);
+public class ExceptionController {
+    Logger logger= LoggerFactory.getLogger(ExceptionController.class);
 
     @GetMapping("/sample404")
     public String throwException(){

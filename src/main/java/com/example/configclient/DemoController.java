@@ -18,9 +18,9 @@ import javax.annotation.PostConstruct;
 
 @RestController
 @RefreshScope
-public class DemoClass {
+public class DemoController {
 
-    Logger log = LoggerFactory.getLogger(DemoClass.class);
+    Logger log = LoggerFactory.getLogger(DemoController.class);
     @Value("${excel.file.location}")
     String filePath;
 
