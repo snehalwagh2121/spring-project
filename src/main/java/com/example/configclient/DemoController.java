@@ -12,12 +12,14 @@ import org.springframework.context.ApplicationEvent;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.event.EventListener;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.PostConstruct;
 
 @RestController
 @RefreshScope
+@RequestMapping("/service2")
 public class DemoController {
 
     Logger log = LoggerFactory.getLogger(DemoController.class);
@@ -30,6 +32,12 @@ public class DemoController {
     @GetMapping("/")
     public String getFilePath() {
         log.info("file : " + filePath);
+        log.info("message: " + message);
+        return message;
+    }
+
+    @GetMapping("/message")
+    public String message() {
         log.info("message: " + message);
         return message;
     }

@@ -17,17 +17,19 @@ public class InterceptorClass implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         log.info("inside interceptor class's prehandle method");
 
-        String auth = request.getHeader("Authorization");
-        if (auth == null) {
-            log.info("Authorization is null");
-            return false;
-        } else if (auth.equals("test")) {
-            log.info("Test authorization");
-            return true;
-        } else {
-            log.info("invalid value of authorization");
-            return false;
-        }
+//        String auth = request.getHeader("Authorization");
+//        if (auth == null) {
+//            log.info("Authorization is null");
+//            return false;
+//        } else if (auth.equals("test")) {
+//            log.info("Test authorization");
+//            return true;
+//        } else {
+//            log.info("invalid value of authorization");
+//            return false;
+//        }
+
+        return true;
     }
 
     @Override
