@@ -136,3 +136,14 @@ server.ssl.key-store-password=mypass@1
 
 ##SWAGGER
 [link for annotations](https://www.javainuse.com/spring/boot_swagger_annotations)
+
+##ZIPKIN-SERVER JAR
+[maven-jars](https://repo1.maven.org/maven2/io/zipkin/java/zipkin-server/)
+
+download the latest zipkin server jar and run in local using command:
+```java
+java -jar zipkin-server-2.12.9-exec.jar
+```
+the server will be running at port 9411 by default
+![img_1.png](img_1.png)
+
