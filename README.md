@@ -133,3 +133,6 @@ server.ssl.key-store-type=jks
 server.ssl.key-store-password=mypass@1
 ```
 
+
+##SWAGGER
+[link for annotations](https://www.javainuse.com/spring/boot_swagger_annotations)

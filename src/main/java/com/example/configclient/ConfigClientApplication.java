@@ -26,7 +26,7 @@ import java.util.Collection;
 import java.util.List;
 
 @SpringBootApplication
-//@EnableEurekaClient
+@EnableEurekaClient
 public class ConfigClientApplication {
 
 	public static void main(String[] args) {

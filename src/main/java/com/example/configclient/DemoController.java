@@ -1,5 +1,6 @@
 package com.example.configclient;
 
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,6 +31,7 @@ public class DemoController {
     String message;
 
     @GetMapping("/")
+    @ApiOperation(value = "displays excel file path")
     public String getFilePath() {
         log.info("file : " + filePath);
         log.info("message: " + message);
@@ -37,6 +39,7 @@ public class DemoController {
     }
 
     @GetMapping("/message")
+    @ApiOperation(value = "Displays message")
     public String message() {
         log.info("message: " + message);
         return message;
