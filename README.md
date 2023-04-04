@@ -147,3 +147,63 @@ java -jar zipkin-server-2.12.9-exec.jar
 the server will be running at port 9411 by default
 ![img_1.png](img_1.png)
 
+
+##SEND EMAILS:
+dependency:
+```java
+<dependency>
+<groupId>org.springframework.boot</groupId>
+<artifactId>spring-boot-starter-mail</artifactId>
+</dependency>    
+```
+
+properties:
+```java
+spring.mail.host=smtp.gmail.com
+spring.mail.port=587
+spring.mail.username=<gmail name>
+spring.mail.password=<15 digits password>
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+```
+
+we can set this using code too:
+```java
+	@Bean
+	public JavaMailSender getJavaMailSender() {
+		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+		mailSender.setHost("smtp.gmail.com");
+		mailSender.setPort(587);
+
+		mailSender.setUsername("snehalwagh2121@gmail.com");
+		mailSender.setPassword("hello@world1");
+
+		Properties props = mailSender.getJavaMailProperties();
+		props.put("mail.transport.protocol", "smtp");
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.debug", "true");
+
+		return mailSender;
+	}
+```
+
+method to send email:
+```java
+@Autowired
+    private JavaMailSender emailSender;
+
+    public void sendSimpleMessage(
+            String to, String subject, String text) {
+
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("samplegmail@gmail.com");
+        message.setTo(to);
+        message.setSubject(subject);
+        message.setText(text);
+        emailSender.send(message);
+    }
+
+```
+
+___NOTE: Also to get the application password, we need to login to gmail and turn on 2-step verifincation and after turning it on, on the same page at the bottom there will be an option to set application password.___
