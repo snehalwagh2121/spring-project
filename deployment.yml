@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: config-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: config-client
+  template:
+    metadata:
+      labels:
+        app: config-client
+    spec:
+      containers:
+        - name: config-client
+          image: snehalwagh2121/config-client-image
+          ports:
+            - containerPort: 9011
